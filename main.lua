@@ -80,11 +80,9 @@ local transitions = {}                    -- keep track of all the transitions i
 local sounds = {}                         -- keep track of all the sounds in 1 object
 local myChannel, mySource                 -- keep track of the OpenAL channel and source (for changing pitch)
 
--- Scale the heartbeat up
+-- Recalculate the life meter position/mask and increase the speed of the background track
 
-local heartbeat1 = function()
-	
-	-- Recalculate the life meter (increment up and down)
+local recalculate = function()
 	
 	heartPower = heartPower - HEART_INC
 	if ( heartPower < 0 ) then
@@ -122,18 +120,22 @@ local heartbeat1 = function()
 	
 	halfHeartRate = ( ( 60 / sound_bpm ) * 1000 ) / 2
 	
-	-- Scale both images up to 100% and when done start scaling back down
+end
+
+-- Scale both images up to 100% and when done start scaling back down
+
+local heartbeat1 = function()
+
+	recalculate()	
 	
 	transitions.scaleUp1 = transition.to( heartBack, { time=halfHeartRate, xScale=1.0, yScale=1.0, onComplete=heartbeat2 } )
 	transitions.scaleUp2 = transition.to( heartFront, { time=halfHeartRate, xScale=1.0, yScale=1.0 } )
 
 end
 
--- Scale the heartbeat down
+-- Scale both images down to 50% and when done start scaling back up
 
 heartbeat2 = function()
-	
-	-- Scale both images down to 50% and when done start scaling back up
 
 	transitions.scaleDown1 = transition.to( heartBack, { time=halfHeartRate, xScale=0.5, yScale=0.5, onComplete=heartbeat1 } )
 	transitions.scaleDown2 = transition.to( heartFront, { time=halfHeartRate, xScale=0.5, yScale=0.5 } )
