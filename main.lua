@@ -15,6 +15,8 @@
 
 -- Constants
 
+local _W = display.contentWidth
+local _H = display.contentHeight
 local ORIGINAL_SOUND_BPM = 116            -- original BPM for soundtrack
 local BPM_INC = 0.4                       -- how fast to increment the BPM
 local HEART_INC = 4.0                     -- how fast to increment/decrement the life meter
@@ -24,6 +26,12 @@ local HEART_WIDTH = 100                   -- how wide is the heart image
 -- Hide the statusbar
 
 display.setStatusBar( display.HiddenStatusBar )
+
+-- Setup the background image
+
+local background = display.newImageRect( "background.png", 600, 600 )
+background:setReferencePoint( display.CenterReferencePoint )
+background.x = _W/2 background.y = _H/2
 
 -- Setup the spritesheet images
 
@@ -52,17 +60,13 @@ local heartSheet = graphics.newImageSheet( "hearts.png", heartSheetOptions )
 
 local heartBack = display.newImage( heartSheet, 2 )
 heartBack:setReferencePoint( display.CenterReferencePoint )
-heartBack.x = 160 heartBack.y = 240
-heartBack.xScale = 0.5 heartBack.yScale = 0.5
-heartBack.isVisible = false
+heartBack.x = _W/2 heartBack.y = _H/2
 
 -- Setup the heart foreground image	( red heart )
 
 local heartFront = display.newImage( heartSheet, 1 )
 heartFront:setReferencePoint( display.CenterReferencePoint )
-heartFront.x = 160 heartFront.y = 240
-heartFront.xScale = 0.5 heartFront.yScale = 0.5
-heartFront.isVisible = false
+heartFront.x = _W/2 heartFront.y = _H/2
 
 -- Setup the mask for display the life meter
 
@@ -141,6 +145,18 @@ heartbeat2 = function()
 	transitions.scaleDown2 = transition.to( heartFront, { time=halfHeartRate, xScale=0.5, yScale=0.5 } )
 	
 end
+	
+-- Rotate background
+
+local rotateBackground = function()
+		
+	background:rotate(1)
+
+end
+
+-- Start the background rotating
+
+timer.performWithDelay( 10, rotateBackground, 0 )
 
 -- Start the background track
 -- Thanks to Kevin MacLeod at incompetech.com for the background track "Pixel Peeker Polka"
@@ -151,6 +167,4 @@ myChannel, mySource = audio.play( sounds.bgSound, { channel=1, loops=-1 } )
 
 -- Start the heartbeat
 
-heartFront.isVisible = true
-heartBack.isVisible = true
 heartbeat1()
