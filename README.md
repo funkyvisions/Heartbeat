@@ -1,4 +1,5 @@
 Heartbeat
 =========
 
-Example showing how to use a beating heart as a life meter
+Example showing how to use a beating heart as a life meter.  Also shows how to change 
+the pitch of a backing track and keep the animation in synch with it.
