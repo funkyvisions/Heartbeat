@@ -30,7 +30,7 @@ display.setStatusBar( display.HiddenStatusBar )
 -- Setup the background image
 
 local background = display.newImageRect( "background.png", 600, 600 )
-background:setReferencePoint( display.CenterReferencePoint )
+background.anchorX = 0.5; background.anchorY = 0.5;
 background.x = _W/2 background.y = _H/2
 
 -- Setup the spritesheet images
@@ -59,13 +59,13 @@ local heartSheet = graphics.newImageSheet( "hearts.png", heartSheetOptions )
 -- Setup the heart background image ( white heart )
 
 local heartBack = display.newImage( heartSheet, 2 )
-heartBack:setReferencePoint( display.CenterReferencePoint )
+heartBack.anchorX = 0.5; heartBack.anchorY = 0.5;
 heartBack.x = _W/2 heartBack.y = _H/2
 
 -- Setup the heart foreground image	( red heart )
 
 local heartFront = display.newImage( heartSheet, 1 )
-heartFront:setReferencePoint( display.CenterReferencePoint )
+heartFront.anchorX = 0.5; heartFront.anchorY = 0.5;
 heartFront.x = _W/2 heartFront.y = _H/2
 
 -- Setup the mask for display the life meter
